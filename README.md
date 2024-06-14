@@ -1,12 +1,12 @@
 # SR2Control (Speech Recognition to Control)  
 ## 概要  
-SR2Control（エスアール・トゥー・コントロール）は、自分がマイクに向かって話した言葉を外部の音声認識（Speech Recognition, SR）システムからを受け取り、特定の環境（特にPCゲーム）向けの命令として解釈し、その命令に対応するキーボード／マウス入力（Control）を代行処理するソフトウェアツールです。  
+SR2Control（エスアール・トゥー・コントロール）は、自分がマイクに向かって話した言葉を外部の音声認識（Speech Recognition, SR）システムから受け取り、特定の環境（特にPCゲーム）向けの命令として解釈し、その命令に対応するキーボード／マウス入力（Control）を代行処理するソフトウェアツールです。  
 
 同じく私が制作した、PCゲーム向け日本語音声コマンディングツール「[TacspeakJP](https://github.com/Domtaro/tacspeakJP)」の精神的後継ツールになります。
 
 ## 使用例
 本格SWATタクティカルシューティング『[Ready or Not](https://store.steampowered.com/app/1144200/Ready_or_Not/)』で使っている様子です。  
-[![動画サムネイル]()]((https://youtu.be/169Dqy98beA)
+[![動画サムネイル](http://img.youtube.com/vi/169Dqy98beA/maxresdefault.jpg)](https://youtu.be/169Dqy98beA)
 
 ## 機能・特徴  
 ### ▼ 任意の外部音声認識システムから、認識結果のテキストを受け取ります。  
