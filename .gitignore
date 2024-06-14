@@ -1,0 +1,10 @@
+.venv/
+tmp/
+__pycache__/
+build/
+
+.*.log
+.debug_grammar*.txt
+test_model_output_*.txt
+/audio.txt
+tacspeak/test_model.py
