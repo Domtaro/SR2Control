@@ -236,8 +236,9 @@ class SR2C:
 			"cmd_hold": "HoldGoCode",
 			"cmd_default": "IssueDefaultCommand",
 			"cmd_menu": "OpenSwatCommand",
-			"interact": "UseOnly",
-			"yell": "Yell",
+			"interact_and_yell": "Use",	# attention! this action has special post process, need to be placed earlier than "interact" and "yell"
+			"interact": "UseOnly",		# attention! this action has special post process
+			"yell": "Yell",				# attention! this action has special post process
 		}
 
 		# default key bindings, use when failed to set automatically
@@ -290,7 +291,11 @@ class SR2C:
 					for tacspeak_action in self._map_sr2c_ron_actionnames.keys():
 						_ron_action = self._map_sr2c_ron_actionnames[tacspeak_action]
 						if _ron_action in _ron_key_bindings:
-							self._ingame_key_bindings[tacspeak_action] = copy.deepcopy(_ron_key_bindings[_ron_action])
+							if _ron_action == "Use":	# special case
+								self._ingame_key_bindings["interact"] = copy.deepcopy(_ron_key_bindings[_ron_action])
+								self._ingame_key_bindings["yell"] = copy.deepcopy(_ron_key_bindings[_ron_action])
+							else:
+								self._ingame_key_bindings[tacspeak_action] = copy.deepcopy(_ron_key_bindings[_ron_action])
 						else:
 							continue
 
