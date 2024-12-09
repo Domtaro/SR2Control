@@ -68,6 +68,9 @@ include_files.append("README.md")
 include_files.append("LICENSE.txt")
 include_files.append(("licenses/pkg_licenses_notices.txt", "licenses/pkg_licenses_notices.txt"))
 include_files.append(("licenses/pkg_licenses_summary.md", "licenses/pkg_licenses_summary.md"))
+include_files.append(("sr2ctrl/settings/SR2Control_settings.ini", "sr2ctrl/settings/SR2Control_settings.ini"))
+include_files.append(("sr2ctrl/settings/SR2Control_settings_KeyNameCheck.ini", "sr2ctrl/settings/SR2Control_settings_KeyNameCheck.ini"))
+include_files.append(("sr2ctrl/settings/SR2Control_settings_ReadyOrNot.ini", "sr2ctrl/settings/SR2Control_settings_ReadyOrNot.ini"))
 include_files.append("launchers/_Start_KeyNameCheck.cmd")
 include_files.append("launchers/_Start_RoN_Default.cmd")
 include_files.append("launchers/_Start_RoN_Test.cmd")
@@ -84,8 +87,8 @@ build_exe_options = {
                  "concurrent",
                  "email",
                  # "encodings",
-                 "html",
-                 "http",
+                 # "html",
+                 # "http",
                  # "json",
                  # "lib2to3",
                  # "logging",

@@ -5,6 +5,7 @@
 #
 import os
 import argparse
+import configparser
 
 import keyboard
 import mouse
@@ -14,20 +15,27 @@ from multiprocessing import freeze_support
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-g", "--grammar", action="store", default=r"",
-                        help="grammar file, rules of actions.")
-    parser.add_argument("-m", "--mode", action="store", default=r"UDP",
-                        help="mode of SR result receiving, case-insensitive."
-                            + " 'UDP':default."
-                            + " 'YNC_bouyomi':bouyomi plugin of Yukarinette Connector NEO."
-                        )
-    parser.add_argument("-p", "--port", action="store", default=25555,
-                        help="listening port to recieve SR result. default is 25555.")
-    parser.add_argument("-t", "--test", action="store_true",
-                        help="start as test mode. keys will not pressed actually.")
-    parser.add_argument("-k", "--get_key_name", action="store_true",
-                        help="check the keys name you pressed.")
+    parser.add_argument("-c", "--config", action="store", default=r".\sr2ctrl\settings\SR2Control_settings.ini",
+                        help="config file")
+    parser.add_argument("-t", "--test", action="store_true", default=False,
+                        help="start as test mode. the behavior depends on implementation of grammar.")
     args = parser.parse_args()
+
+    config_path = args.config
+    drive, directory = os.path.splitdrive(config_path)
+    if drive != "":
+        config_path = os.path.normcase(config_path).replace(os.path.normcase(os.getcwd()), r".")
+    if not os.path.isfile(config_path):
+        print(f"ERROR: invalid file name('{args.config}') given as config file!")
+        print("exit...")
+        return
+
+    config = configparser.ConfigParser()
+    try:
+        config.read(args.config, encoding="utf-8")
+    except Exception as e:
+        print(e)
+    user_config = config["USERS"]
 
     print("")
     print(" -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
@@ -36,7 +44,10 @@ def main():
     print("  (c) Copyright 2024 by Domtaro")
     print("")
 
-    if args.get_key_name:
+    mode = user_config.get("mode").lower()
+
+    # Get-Key-Name mode
+    if (mode == "getkeyname"):
         print("press any keys which you want to check the key name.")
         print(r"input [ctrl] + [c] to exit.")
         def on_press_kb(event):
@@ -50,17 +61,26 @@ def main():
         keyboard.unhook_all_hotkeys()
         mouse.unhook_all()
         print(r"[ctrl] + [c] pressed. exit...")
-        return
-    grammar_path = args.grammar
-    drive, directory = os.path.splitdrive(args.grammar)
+        return # end the program
+
+    # extract values in the config file
+    grammar_path = user_config.get("grammar")
+    port = user_config.getint("port")
+    ptt_mode = user_config.get("ptt_mode").lower()
+    ptt_key = user_config.get("ptt_key")
+
+    # normalize and check the grammar file path
+    drive, directory = os.path.splitdrive(grammar_path)
+    del directory
     if drive != "":
-        grammar_path = os.path.normcase(args.grammar).replace(os.path.normcase(os.getcwd()), r".")
+        grammar_path = os.path.normcase(grammar_path).replace(os.path.normcase(os.getcwd()), r".")
     if not os.path.isfile(grammar_path):
-        print("ERROR: invalid file name given as grammar! (-g option)")
+        print(f"ERROR: invalid file name('{user_config.get("grammar")}') given as grammar!")
         print("exit...")
         return
 
-    sr2ctrl_main(grammar_path=grammar_path, port=int(args.port), mode=(args.mode).lower(), test=args.test)
+    # main process
+    sr2ctrl_main(grammar_path=grammar_path, port=port, mode=mode, test=args.test, ptt_mode=ptt_mode, ptt_key=ptt_key)
     print("exit...")
 
 if __name__ == "__main__":

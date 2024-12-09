@@ -1,3 +1,3 @@
-@call .\SR2Control.exe -k
+@call .\SR2Control.exe -c ".\sr2ctrl\settings\SR2Control_settings_KeyNameCheck.ini"
 
 pause

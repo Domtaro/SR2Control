@@ -1,3 +1,3 @@
-@call .\SR2Control.exe -g ".\sr2ctrl\grammar\ReadyOrNot.py" -m "YNC_Bouyomi" -p 25555
+@call .\SR2Control.exe -c ".\sr2ctrl\settings\SR2Control_settings_ReadyOrNot.ini"
 
 pause
