@@ -241,6 +241,8 @@ class SR2C:
 			"NumPadEight": "num 8",
 			"NumPadNine": "num 9",
 			"Divide": "/",
+			"Slash": "/",
+			"BackSlash": "\\",
 			"SpaceBar": "space",
 			"LeftShift": "left shift",
 			"LeftControl": "left ctrl",
